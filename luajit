@@ -1,0 +1,20 @@
+local play
+play = function()
+	print(now())
+	print("hallo")
+	callback(now()+10, play)
+end
+play()local host, port = "localhost", 7098
+local socket = require("socket")
+
+
+--note the newline below
+while true do
+	local tcp = assert(socket.tcp())
+	tcp:connect(host, port)
+	local io = io.read()
+	print(io)
+	tcp:send(io.."\n")
+	tcp:send("stop\n")
+	tcp:close()
+end
